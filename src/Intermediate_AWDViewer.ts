@@ -1,4 +1,4 @@
-///<reference path="../libs/Away3D.next.d.ts" />
+///<reference path="../libs/stagegl-renderer.next.d.ts" />
 
 /*
 
@@ -6,7 +6,7 @@ AWD file loading example in Away3d
 
 Demonstrates:
 
-How to use the Loader3D object to load an embedded internal awd model.
+How to use the Loader object to load an embedded internal awd model.
 
 Code by Rob Bateman
 rob@infiniteturtles.co.uk
@@ -41,17 +41,18 @@ module examples
     import SkeletonAnimator			= away.animators.SkeletonAnimator;
     import SkeletonClipNode			= away.animators.SkeletonClipNode;
     import CrossfadeTransition		= away.animators.CrossfadeTransition;
-    import PerspectiveLens			= away.cameras.PerspectiveLens;
-    import View3D					= away.containers.View3D;
+    import View						= away.containers.View;
     import HoverController			= away.controllers.HoverController;
     import AnimationStateEvent		= away.events.AnimationStateEvent;
     import AssetEvent				= away.events.AssetEvent;
 	import Vector3D					= away.geom.Vector3D;
     import AssetLibrary				= away.library.AssetLibrary;
     import AssetType				= away.library.AssetType;
-    import Loader3D					= away.loaders.Loader3D;
-    import AWD2Parser				= away.loaders.AWDParser;
+    import Loader					= away.containers.Loader;
+    import AWD2Parser				= away.parsers.AWDParser;
+	import PerspectiveProjection	= away.projections.PerspectiveProjection;
 	import URLRequest				= away.net.URLRequest;
+	import DefaultRenderer			= away.render.DefaultRenderer;
 	import Keyboard					= away.ui.Keyboard;
 	import RequestAnimationFrame	= away.utils.RequestAnimationFrame;
 
@@ -60,7 +61,7 @@ module examples
 	{
 		
         //engine variables
-        private _view:View3D;
+        private _view:View;
         private _cameraController:HoverController;
         private _animator:SkeletonAnimator;
 
@@ -73,7 +74,7 @@ module examples
 		private _lastMouseX:number;
 		private _lastMouseY:number;
         private _move:boolean;
-		private _stateTransition:CrossfadeTransition = new CrossfadeTransition(0.1);
+		private _stateTransition:CrossfadeTransition = new CrossfadeTransition(0.5);
 		private static IDLE_NAME:string = "idle";
         
         /**
@@ -100,13 +101,13 @@ module examples
         private initEngine():void
 		{
 			//create the view
-			this._view = new View3D();
+			this._view = new View(new DefaultRenderer());
 			this._view.backgroundColor = 0x333338;
             
 			//create custom lens
-			this._view.camera.lens = new PerspectiveLens(70);
-			this._view.camera.lens.far = 5000;
-			this._view.camera.lens.near = 1;
+			this._view.camera.projection = new PerspectiveProjection(70);
+			this._view.camera.projection.far = 5000;
+			this._view.camera.projection.near = 1;
             
 			//setup controller to be used on the camera
 			this._cameraController = new HoverController(this._view.camera, null, 0, 0, 150, 10, 90);
@@ -126,10 +127,10 @@ module examples
 			AssetLibrary.enableParser(AWD2Parser);
 
 			//kickoff asset loading
-			var loader:Loader3D = new Loader3D();
-			loader.addEventListener(AssetEvent.ASSET_COMPLETE, this.onAssetComplete, this);
+			var loader:Loader = new Loader();
+			loader.addEventListener(AssetEvent.ASSET_COMPLETE, (event:AssetEvent) => this.onAssetComplete(event));
 
-			loader.load(new URLRequest("assets/shambler_new.awd"));
+			loader.load(new URLRequest("assets/shambler.awd"));
 
 			this._view.scene.addChild(loader);
 		}
@@ -170,7 +171,7 @@ module examples
 					node.looping = true;
 				} else {
 					node.looping = false;
-					node.addEventListener(AnimationStateEvent.PLAYBACK_COMPLETE, this.onPlaybackComplete, this);
+					node.addEventListener(AnimationStateEvent.PLAYBACK_COMPLETE, (event:AnimationStateEvent) => this.onPlaybackComplete(event));
 				}
 			}
 		}

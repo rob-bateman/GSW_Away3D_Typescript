@@ -30,6 +30,7 @@ var examples;
 (function (examples) {
     var Loader = away.containers.Loader;
 
+    var View = away.containers.View;
     var HoverController = away.controllers.HoverController;
 
     var Skybox = away.entities.Skybox;
@@ -72,11 +73,10 @@ var examples;
         * Initialise the engine
         */
         Basic_LoadOBJ.prototype.initEngine = function () {
-            this._view = new away.containers.View(new DefaultRenderer());
+            this._view = new View(new DefaultRenderer());
 
             //setup the camera for optimal shadow rendering
-            this._view.camera.projection.far = 2100;
-
+            //this._view.camera.projection.far = 2100;
             //setup controller to be used on the camera
             this._cameraController = new HoverController(this._view.camera, null, 225, 0, 1000);
         };

@@ -119,7 +119,7 @@ module examples
 			this._view = new View(new DefaultRenderer());
 
 			//setup the camera for optimal shadow rendering
-			this._view.camera.projection.far = 2100;
+			//this._view.camera.projection.far = 2100;
 
 			//setup controller to be used on the camera
 			this._cameraController = new HoverController(this._view.camera, null, 225, 0, 1000);

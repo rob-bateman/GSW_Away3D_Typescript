@@ -1,0 +1,28 @@
+{
+  "data":[
+     {
+        "id":"posX",
+        "image":"diffuse_positive_x.jpg"
+     },
+     {
+        "id":"negX",
+        "image":"diffuse_negative_x.jpg"
+     },
+     {
+        "id":"posY",
+        "image":"diffuse_positive_y.jpg"
+     },
+     {
+        "id":"negY",
+        "image":"diffuse_negative_y.jpg"
+     },
+     {
+        "id":"posZ",
+        "image":"diffuse_positive_z.jpg"
+     },
+     {
+        "id":"negZ",
+        "image":"diffuse_negative_z.jpg"
+     }
+  ]
+}

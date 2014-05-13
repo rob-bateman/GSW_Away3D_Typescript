@@ -1,0 +1,28 @@
+{
+  "data":[
+     {
+        "id":"posX",
+        "image":"specular_positive_x.jpg"
+     },
+     {
+        "id":"negX",
+        "image":"specular_negative_x.jpg"
+     },
+     {
+        "id":"posY",
+        "image":"specular_positive_y.jpg"
+     },
+     {
+        "id":"negY",
+        "image":"specular_negative_y.jpg"
+     },
+     {
+        "id":"posZ",
+        "image":"specular_positive_z.jpg"
+     },
+     {
+        "id":"negZ",
+        "image":"specular_negative_z.jpg"
+     }
+  ]
+}
